@@ -211,20 +211,33 @@ app = Flask(__name__)
 # /Calender?date=03/12/2000
 @app.route('/Calender')
 def Calender():
+    #Check if the incoming request is a POST request
+    if request.method == 'POST':
+        return "Invalid Request"
+    #Attempt to get the date argument
     date_string = request.args.get('date')
+    # If there was no date argument
     if date_string == None:
-        return "Invalid Date"
-    else:
-        #Determine if proper datetime given
-        date_string = date_string.split('/')
-        date_string = [int(x) for x in date_string]
-        if len(date_string) != 3:
-            return "Invalid Date Format"
-        start_date = date(date_string[2], date_string[0], date_string[1])
-        #Create the return doc
-        computeCalender(start_date)
-        path = os.path.join(os.getcwd(), 'Output.docx')
-        return send_file(path, as_attachment=True)
+        return "No Date Argument"
+    # Make sure the date arg isn't empty
+    if date_string == '':
+        return "Date Argument Empty"
+    # Make sure a date was given
+    date_string = date_string.split('/')
+    if len(date_string) != 3:
+        return "Invalid Date Format"
+    # Make sure all items are numbers
+    for token in date_string:
+        if not token.isdigit():
+            return "Invalid Date"
+    #Convert all the strings to ints
+    date_string = [int(x) for x in date_string]
+    #Create the start date
+    start_date = date(date_string[2], date_string[0], date_string[1])
+    #Create the return doc
+    computeCalender(start_date)
+    path = os.path.join(os.getcwd(), 'Output.docx')
+    return send_file(path, as_attachment=True)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port='4000')
