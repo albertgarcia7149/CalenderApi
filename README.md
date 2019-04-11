@@ -16,6 +16,6 @@ Make sure python 3 and pip 3 are installed
 
 `docker build -t api:alpine .`
 
-`docker run -it -p 4000:4000 api:apline`
+`docker run -p 4000:4000 api:apline`
 
 Then upload to a docker host
