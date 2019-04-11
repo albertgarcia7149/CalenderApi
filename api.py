@@ -205,7 +205,6 @@ def computeCalender(start):
     document.save('Output.docx')
 
 
-
 app = Flask(__name__)
 # EX
 # /Calender?date=03/12/2000
@@ -232,8 +231,11 @@ def Calender():
             return "Invalid Date"
     #Convert all the strings to ints
     date_string = [int(x) for x in date_string]
-    #Create the start date
-    start_date = date(date_string[2], date_string[0], date_string[1])
+    try:
+        #Create the start date and catch any value error
+        start_date = date(date_string[2], date_string[0], date_string[1])
+    except ValueError:
+        return "Invalid Date"
     #Create the return doc
     computeCalender(start_date)
     path = os.path.join(os.getcwd(), 'Output.docx')
