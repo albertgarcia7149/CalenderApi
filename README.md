@@ -7,7 +7,7 @@ Make sure python 3 and pip 3 are installed
 
 `cd CalenderApi`
 
-`pip3 install requirements.txt`
+`pip3 install -r requirements.txt`
 
 `python3 api.py`
 
